@@ -21,7 +21,7 @@ interface Track {
   duration: number;
 }
 
-interface Album {
+export interface Album {
   id: string;
   name: string;
   year: number;
@@ -37,7 +37,7 @@ interface Favorites {
 export const users: User[] = [];
 export const artists: Artist[] = [];
 const tracks: Track[] = [];
-const albums: Album[] = [];
+export const albums: Album[] = [];
 const favorites: Favorites[] = [];
 
 export function createCutUser(user: User) {

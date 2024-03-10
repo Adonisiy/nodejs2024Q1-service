@@ -1,5 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { Artist, artists } from 'src/database';
+import { Artist, albums, artists } from 'src/database';
 import { v4 as uuidv4 } from 'uuid';
 import { CreateArtistDto } from './dto/Artist.dto';
 import { StatusCodes } from 'http-status-codes';
@@ -41,6 +41,7 @@ export class ArtistService {
     if (index === -1)
       throw new HttpException('Artist is not found', StatusCodes.NOT_FOUND);
     artists.splice(index, 1);
+    for (let album of albums) if (album.artistId === id) album.artistId = null;
     throw new HttpException('Artist deleted', StatusCodes.NO_CONTENT);
   }
 }
