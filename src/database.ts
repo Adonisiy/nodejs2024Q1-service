@@ -7,7 +7,7 @@ export interface User {
   updatedAt: number;
 }
 
-interface Artist {
+export interface Artist {
   id: string;
   name: string;
   grammy: boolean;
@@ -35,7 +35,7 @@ interface Favorites {
 }
 
 export const users: User[] = [];
-const artists: Artist[] = [];
+export const artists: Artist[] = [];
 const tracks: Track[] = [];
 const albums: Album[] = [];
 const favorites: Favorites[] = [];
