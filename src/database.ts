@@ -13,7 +13,7 @@ export interface Artist {
   grammy: boolean;
 }
 
-interface Track {
+export interface Track {
   id: string;
   name: string;
   artistId: string | null;
@@ -36,7 +36,7 @@ interface Favorites {
 
 export const users: User[] = [];
 export const artists: Artist[] = [];
-const tracks: Track[] = [];
+export const tracks: Track[] = [];
 export const albums: Album[] = [];
 const favorites: Favorites[] = [];
 
