@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { Track, favorites, tracks } from 'src/database';
 import { v4 as uuidv4, validate } from 'uuid';
 import { CreateTrackDto } from './dto/track.dto';

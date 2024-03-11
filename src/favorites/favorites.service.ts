@@ -1,14 +1,11 @@
 import { HttpException, Injectable } from '@nestjs/common';
 import {
-  Album,
   FavoritesResponse,
   albums,
   artists,
   favorites,
   tracks,
 } from 'src/database';
-import { v4 as uuidv4, validate } from 'uuid';
-import { CreateFavoritesDto } from './dto/favorites.dto';
 import { StatusCodes } from 'http-status-codes';
 
 @Injectable({})
@@ -48,11 +45,11 @@ export class FavoritesService {
 
   getAllFavorites() {
     const result: FavoritesResponse = { artists: [], albums: [], tracks: [] };
-    for (let id of favorites.tracks)
+    for (const id of favorites.tracks)
       result.tracks.push(tracks.find((s) => s.id === id));
-    for (let id of favorites.artists)
+    for (const id of favorites.artists)
       result.artists.push(artists.find((s) => s.id === id));
-    for (let id of favorites.albums)
+    for (const id of favorites.albums)
       result.albums.push(albums.find((s) => s.id === id));
     return result;
   }

@@ -1,15 +1,12 @@
 import {
-  Body,
   Controller,
   Delete,
   Get,
   Param,
   ParseUUIDPipe,
   Post,
-  Put,
 } from '@nestjs/common';
 import { FavoritesService } from './favorites.service';
-import { CreateFavoritesDto } from './dto/favorites.dto';
 
 @Controller('favs')
 export class FavoritesController {
