@@ -21,7 +21,7 @@ export class UserService {
 
   getAllUsers() {
     const result = [];
-    for (let user of users) {
+    for (const user of users) {
       result.push(createCutUser(user));
     }
     return result;

@@ -1,5 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { Track, tracks } from 'src/database';
+import { Track, favorites, tracks } from 'src/database';
 import { v4 as uuidv4, validate } from 'uuid';
 import { CreateTrackDto } from './dto/track.dto';
 import { StatusCodes } from 'http-status-codes';
@@ -60,10 +60,12 @@ export class TrackService {
   }
 
   deleteTrackById(id: string) {
-    const index = tracks.findIndex((s) => s.id === id);
+    let index = tracks.findIndex((s) => s.id === id);
     if (index === -1)
       throw new HttpException('Track is not found', StatusCodes.NOT_FOUND);
     tracks.splice(index, 1);
+    index = favorites.tracks.findIndex((s) => s === id);
+    if (index !== -1) favorites.tracks.splice(index, 1);
     throw new HttpException('Track deleted', StatusCodes.NO_CONTENT);
   }
 }

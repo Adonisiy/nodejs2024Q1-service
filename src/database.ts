@@ -28,17 +28,23 @@ export interface Album {
   artistId: string | null;
 }
 
-interface Favorites {
+export interface Favorites {
   artists: string[];
   albums: string[];
   tracks: string[];
+}
+
+export interface FavoritesResponse {
+  artists: Artist[];
+  albums: Album[];
+  tracks: Track[];
 }
 
 export const users: User[] = [];
 export const artists: Artist[] = [];
 export const tracks: Track[] = [];
 export const albums: Album[] = [];
-const favorites: Favorites[] = [];
+export const favorites: Favorites = { artists: [], albums: [], tracks: [] };
 
 export function createCutUser(user: User) {
   const cutUser = Object.assign({}, user);
