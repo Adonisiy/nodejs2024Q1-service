@@ -14,6 +14,9 @@ git clone {repository URL}
 ## Installing NPM modules
 
 ```
+git checkout workbranch
+```
+```
 npm install
 ```
 
@@ -23,9 +26,7 @@ npm install
 npm start
 ```
 
-After starting the app on port (4000 as default) you can open
-in your browser OpenAPI documentation by typing http://localhost:4000/doc/.
-For more information about OpenAPI/Swagger please visit https://swagger.io/.
+By default, the application starts on port 4000. You can create `.env` file based on `.env.examle` file and in it specify the port from which the application will start
 
 ## Testing
 
@@ -41,18 +42,6 @@ To run only one of all test suites
 
 ```
 npm run test -- <path to suite>
-```
-
-To run all test with authorization
-
-```
-npm run test:auth
-```
-
-To run only specific test suite with authorization
-
-```
-npm run test:auth -- <path to suite>
 ```
 
 ### Auto-fix and format
