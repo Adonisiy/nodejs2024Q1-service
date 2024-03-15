@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  db:
+    env_file: .env
+    container_name: ${APP_NAME}_db
+    image: postgres:${POSTGRES_VERSION}
+    ports:
+      - 5434:5432
+    restart: on-failure
+    networks:
+      - my_net
+networks:
+  my_net:
+    driver: bridge
