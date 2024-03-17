@@ -1,5 +1,4 @@
 import { HttpException, Injectable } from '@nestjs/common';
-// import { Artist, albums, artists, favorites, tracks } from 'src/database';
 import { CreateArtistDto } from './dto/Artist.dto';
 import { StatusCodes } from 'http-status-codes';
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -49,17 +48,6 @@ export class ArtistService {
   }
 
   async deleteArtistById(id: string) {
-    // let index = artists.findIndex((s) => s.id === id);
-    // if (index === -1)
-    //   throw new HttpException('Artist is not found', StatusCodes.NOT_FOUND);
-    // artists.splice(index, 1);
-    // for (const album of albums)
-    //   if (album.artistId === id) album.artistId = null;
-    // for (const track of tracks)
-    //   if (track.artistId === id) track.artistId = null;
-    // index = favorites.artists.findIndex((s) => s === id);
-    // if (index !== -1) favorites.artists.splice(index, 1);
-    // throw new HttpException('Artist deleted', StatusCodes.NO_CONTENT);
     try {
       await this.prisma.artist.delete({
         where: {
@@ -67,6 +55,14 @@ export class ArtistService {
         },
       });
       await this.prisma.album.updateMany({
+        where: {
+          artistId: id,
+        },
+        data: {
+          artistId: null,
+        },
+      });
+      await this.prisma.track.updateMany({
         where: {
           artistId: id,
         },

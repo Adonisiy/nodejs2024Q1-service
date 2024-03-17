@@ -1,6 +1,4 @@
 import { HttpException, Injectable } from '@nestjs/common';
-// import { Album, albums, favorites, tracks } from 'src/database';
-import { v4 as uuidv4, validate } from 'uuid';
 import { CreateAlbumDto } from './dto/album.dto';
 import { StatusCodes } from 'http-status-codes';
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -56,6 +54,14 @@ export class AlbumService {
       await this.prisma.album.delete({
         where: {
           id,
+        },
+      });
+      await this.prisma.track.updateMany({
+        where: {
+          albumId: id,
+        },
+        data: {
+          albumId: null,
         },
       });
     } catch (e) {
