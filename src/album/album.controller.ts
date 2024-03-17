@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
   Param,
   ParseUUIDPipe,
   Post,
@@ -40,7 +41,8 @@ export class AlbumController {
   }
 
   @Delete(':id')
-  deleteAlbum(@Param('id', ParseUUIDPipe) id: string) {
-    this.albumService.deleteAlbumById(id);
+  @HttpCode(204)
+  async deleteAlbum(@Param('id', ParseUUIDPipe) id: string) {
+    await this.albumService.deleteAlbumById(id);
   }
 }

@@ -8,8 +8,12 @@ services:
     ports:
       - 5434:5432
     restart: on-failure
+    volumes:
+      - data_volume:/data
     networks:
       - my_net
 networks:
   my_net:
     driver: bridge
+volumes:
+  data_volume:
