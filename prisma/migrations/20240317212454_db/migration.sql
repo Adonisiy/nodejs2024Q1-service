@@ -39,3 +39,13 @@ CREATE TABLE "Track" (
 
     CONSTRAINT "Track_pkey" PRIMARY KEY ("id")
 );
+
+-- CreateTable
+CREATE TABLE "Favorites" (
+    "id" INTEGER NOT NULL,
+    "artists" TEXT[] DEFAULT ARRAY[]::TEXT[],
+    "albums" TEXT[] DEFAULT ARRAY[]::TEXT[],
+    "tracks" TEXT[] DEFAULT ARRAY[]::TEXT[],
+
+    CONSTRAINT "Favorites_pkey" PRIMARY KEY ("id")
+);

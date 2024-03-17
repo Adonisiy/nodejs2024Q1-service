@@ -64,6 +64,21 @@ export class AlbumService {
           albumId: null,
         },
       });
+      const { albums } = await this.prisma.favorites.findUnique({
+        where: {
+          id: 0,
+        },
+      });
+      const index = albums.findIndex((s) => s === id);
+      albums.splice(index, 1);
+      await this.prisma.favorites.update({
+        where: {
+          id: 0,
+        },
+        data: {
+          albums,
+        },
+      });
     } catch (e) {
       throw new HttpException('Album not found', StatusCodes.NOT_FOUND);
     }

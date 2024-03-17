@@ -43,3 +43,9 @@ model Track {
   duration Int
 }
 
+model Favorites {
+  id      Int @id
+  artists String[] @default([])
+  albums  String[] @default([])
+  tracks  String[] @default([])
+}

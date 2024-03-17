@@ -2,6 +2,7 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
   Param,
   ParseUUIDPipe,
   Post,
@@ -33,17 +34,20 @@ export class FavoritesController {
   }
 
   @Delete('track/:id')
-  deleteFavoriteTrack(@Param('id', ParseUUIDPipe) id: string) {
-    this.favoritesService.deleteFavoriteTrack(id);
+  @HttpCode(204)
+  async deleteFavoriteTrack(@Param('id', ParseUUIDPipe) id: string) {
+    await this.favoritesService.deleteFavoriteTrack(id);
   }
 
   @Delete('album/:id')
-  deleteFavoriteAlbum(@Param('id', ParseUUIDPipe) id: string) {
-    this.favoritesService.deleteFavoriteAlbum(id);
+  @HttpCode(204)
+  async deleteFavoriteAlbum(@Param('id', ParseUUIDPipe) id: string) {
+    await this.favoritesService.deleteFavoriteAlbum(id);
   }
 
   @Delete('artist/:id')
-  deleteFavoriteArtist(@Param('id', ParseUUIDPipe) id: string) {
-    this.favoritesService.deleteFavoriteArtist(id);
+  @HttpCode(204)
+  async deleteFavoriteArtist(@Param('id', ParseUUIDPipe) id: string) {
+    await this.favoritesService.deleteFavoriteArtist(id);
   }
 }

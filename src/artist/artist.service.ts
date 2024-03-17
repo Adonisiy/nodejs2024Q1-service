@@ -70,6 +70,21 @@ export class ArtistService {
           artistId: null,
         },
       });
+      const { artists } = await this.prisma.favorites.findUnique({
+        where: {
+          id: 0,
+        },
+      });
+      const index = artists.findIndex((s) => s === id);
+      artists.splice(index, 1);
+      await this.prisma.favorites.update({
+        where: {
+          id: 0,
+        },
+        data: {
+          artists,
+        },
+      });
     } catch (e) {
       throw new HttpException('Artist not found', StatusCodes.NOT_FOUND);
     }
