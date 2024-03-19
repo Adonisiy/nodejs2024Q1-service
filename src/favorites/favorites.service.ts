@@ -150,7 +150,6 @@ export class FavoritesService {
         },
       });
     }
-    console.log(favorites);
     return {
       artists: await this.prisma.artist.findMany({
         where: {
