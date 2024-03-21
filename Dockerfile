@@ -2,12 +2,10 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-# COPY package.json /app
+COPY package.json .
 
-# RUN npm install
+RUN npm install --production
 
-COPY . .
+COPY dist .
 
-# EXPOSE 3000
-
-# CMD [ "npm","start" ]
+CMD ["npm","start"]
