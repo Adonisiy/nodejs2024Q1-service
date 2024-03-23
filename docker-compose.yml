@@ -21,7 +21,7 @@ services:
       - 4000:4000
     depends_on:
       - postgres
-    restart: on-failure
+    restart: always
     volumes:
       - data_volume:/data
     networks:
