@@ -1,12 +1,26 @@
 version: '3.8'
 
 services:
-  db:
+  postgres:
     env_file: .env
-    container_name: ${APP_NAME}_db
-    image: postgres:${POSTGRES_VERSION}
+    container_name: postgres
+    # image: image-postgres
+    build: ./postgres
     ports:
-      - 5434:5432
+      - 5432:5432
+    restart: on-failure
+    volumes:
+      - data_volume:/data
+    networks:
+      - my_net
+  app:
+    env_file: .env
+    container_name: app
+    image: image-app
+    ports:
+      - 4000:4000
+    depends_on:
+      - postgres
     restart: on-failure
     volumes:
       - data_volume:/data

@@ -1,7 +1,7 @@
 import { HttpException, Injectable } from '@nestjs/common';
-import { CreateArtistDto } from './dto/Artist.dto';
 import { StatusCodes } from 'http-status-codes';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { CreateArtistDto } from './dto/artist.dto';
 
 @Injectable({})
 export class ArtistService {
