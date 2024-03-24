@@ -17,7 +17,7 @@ services:
   app:
     env_file: .env
     container_name: app
-    image: image-app
+    image: adonisiy/image-app
     ports:
       - ${PORT:-4000}:${PORT:-4000}
     depends_on:
