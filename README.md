@@ -12,6 +12,8 @@
 git clone {repository URL}
 ```
 
+Go to nodejs2024Q1-service folder
+
 ## Installing NPM modules
 
 ```
