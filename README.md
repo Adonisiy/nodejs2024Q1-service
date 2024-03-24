@@ -4,6 +4,7 @@
 
 - Git - [Download & Install Git](https://git-scm.com/downloads).
 - Node.js - [Download & Install Node.js](https://nodejs.org/en/download/) and the npm package manager.
+- Docker Desktop (for Mac or Windows) or Docker Engine (for Linux).
 
 ## Downloading
 
@@ -14,19 +15,21 @@ git clone {repository URL}
 ## Installing NPM modules
 
 ```
-git checkout workbranch
+git checkout containers-orm
 ```
 ```
 npm install
 ```
 
 ## Running application
+1. Based on `.env.examle`, create `.env`. Change settings if desired
 
-```
-npm start
-```
+**Important!** When you restart the application with new settings, you must first delete containers and volumes.
 
-By default, the application starts on port 4000. You can create `.env` file based on `.env.examle` file and in it specify the port from which the application will start
+2. Run command `docker compose up`.
+You can use the key `-d`, but it will be difficult to understand when the application has fully loaded.
+
+**Important!** When you first launch an application, the application image is downloaded from Docker Hub. It can take some time.
 
 ## Testing
 
@@ -42,6 +45,10 @@ To run only one of all test suites
 
 ```
 npm run test -- <path to suite>
+```
+To run a vulnerability test
+```
+npm run test:vul
 ```
 
 ### Auto-fix and format
