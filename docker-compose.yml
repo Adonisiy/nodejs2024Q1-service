@@ -4,13 +4,14 @@ services:
   postgres:
     env_file: .env
     container_name: postgres
-    # image: image-postgres
     build: ./postgres
-    ports:
-      - 5432:5432
     restart: on-failure
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
     volumes:
-      - data_volume:/data
+      - data_volume:/var/lib/postgresql/data
     networks:
       - my_net
   app:
@@ -18,12 +19,12 @@ services:
     container_name: app
     image: image-app
     ports:
-      - 4000:4000
+      - ${PORT:-4000}:${PORT:-4000}
     depends_on:
       - postgres
     restart: always
     volumes:
-      - data_volume:/data
+      - data_volume:/var/lib/postgresql/data
     networks:
       - my_net
 networks:
