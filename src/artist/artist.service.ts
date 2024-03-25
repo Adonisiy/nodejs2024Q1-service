@@ -1,52 +1,92 @@
 import { HttpException, Injectable } from '@nestjs/common';
-import { Artist, albums, artists, favorites, tracks } from 'src/database';
-import { v4 as uuidv4 } from 'uuid';
-import { CreateArtistDto } from './dto/Artist.dto';
 import { StatusCodes } from 'http-status-codes';
+import { PrismaService } from 'src/prisma/prisma.service';
+import { CreateArtistDto } from './dto/artist.dto';
 
 @Injectable({})
 export class ArtistService {
-  createArtist(dto: CreateArtistDto) {
-    const artist: Artist = {
-      id: uuidv4(),
-      name: dto.name,
-      grammy: dto.grammy,
-    };
-    artists.push(artist);
+  constructor(private prisma: PrismaService) {}
+
+  async createArtist(dto: CreateArtistDto) {
+    return await this.prisma.artist.create({
+      data: {
+        name: dto.name,
+        grammy: dto.grammy,
+      },
+    });
+  }
+
+  async getAllArtists() {
+    return await this.prisma.artist.findMany({});
+  }
+
+  async getArtistById(id: string) {
+    const artist = await this.prisma.artist.findUnique({
+      where: {
+        id,
+      },
+    });
+    if (!artist)
+      throw new HttpException('Artist not found', StatusCodes.NOT_FOUND);
     return artist;
   }
 
-  getAllArtists() {
-    return artists;
+  async putArtistById(id: string, dto: CreateArtistDto) {
+    try {
+      return await this.prisma.artist.update({
+        where: {
+          id,
+        },
+        data: {
+          name: dto.name,
+          grammy: dto.grammy,
+        },
+      });
+    } catch (e) {
+      throw new HttpException('Artist is not found', StatusCodes.NOT_FOUND);
+    }
   }
 
-  getArtistById(id: string) {
-    const index = artists.findIndex((s) => s.id === id);
-    if (index === -1)
-      throw new HttpException('Artist is not found', StatusCodes.NOT_FOUND);
-    return artists[index];
-  }
-
-  putArtistById(id: string, dto: CreateArtistDto) {
-    const index = artists.findIndex((s) => s.id === id);
-    if (index === -1)
-      throw new HttpException('Artist is not found', StatusCodes.NOT_FOUND);
-    artists[index].name = dto.name;
-    artists[index].grammy = dto.grammy;
-    return artists[index];
-  }
-
-  deleteArtistById(id: string) {
-    let index = artists.findIndex((s) => s.id === id);
-    if (index === -1)
-      throw new HttpException('Artist is not found', StatusCodes.NOT_FOUND);
-    artists.splice(index, 1);
-    for (const album of albums)
-      if (album.artistId === id) album.artistId = null;
-    for (const track of tracks)
-      if (track.artistId === id) track.artistId = null;
-    index = favorites.artists.findIndex((s) => s === id);
-    if (index !== -1) favorites.artists.splice(index, 1);
-    throw new HttpException('Artist deleted', StatusCodes.NO_CONTENT);
+  async deleteArtistById(id: string) {
+    try {
+      await this.prisma.artist.delete({
+        where: {
+          id,
+        },
+      });
+      await this.prisma.album.updateMany({
+        where: {
+          artistId: id,
+        },
+        data: {
+          artistId: null,
+        },
+      });
+      await this.prisma.track.updateMany({
+        where: {
+          artistId: id,
+        },
+        data: {
+          artistId: null,
+        },
+      });
+      const { artists } = await this.prisma.favorites.findUnique({
+        where: {
+          id: 0,
+        },
+      });
+      const index = artists.findIndex((s) => s === id);
+      artists.splice(index, 1);
+      await this.prisma.favorites.update({
+        where: {
+          id: 0,
+        },
+        data: {
+          artists,
+        },
+      });
+    } catch (e) {
+      throw new HttpException('Artist not found', StatusCodes.NOT_FOUND);
+    }
   }
 }
